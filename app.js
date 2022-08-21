@@ -10,6 +10,7 @@ window.onload = function () {
             toDo = createContainer(),
             inputContainer = document.createElement('div'),
             input = document.createElement('input'),
+            inputLabel = document.createElement('label'),
             buttons = document.createElement('div'),
             actionBtn = document.createElement('button'),
             cancelBtn = document.createElement('button'),
@@ -21,26 +22,31 @@ window.onload = function () {
          */
         function createContainer() {
             let toDo = document.createElement('div');
-    
             toDo.classList.add('row');
-    
+
             return toDo;
         }
 
         inputContainer.classList.add('input-field');
         inputContainer.classList.add('col');
-        inputContainer.classList.add('m7');
-        inputContainer.style.marginTop = 0;
-        inputContainer.style.marginBottom = 0;
+        inputContainer.classList.add('m5');
+        inputContainer.classList.add('s12');
+
+        input.id = id;
         input.type = 'text';
-        input.style.marginBottom = 0;
-        input.placeholder = 'What should be done...';
         input.value = text;
-        input.setAttribute('readonly', true);
+        input.disabled = true;
+
+        inputLabel.setAttribute('for', id);
+        inputLabel.appendChild(document.createTextNode('Task Name'));
+
+        inputContainer.appendChild(input);
+        inputContainer.appendChild(inputLabel);
 
         buttons.classList.add('col');
-        buttons.classList.add('m5');
-        buttons.style.marginTop = '6px';
+        buttons.classList.add('m7');
+        buttons.classList.add('s12');
+        buttons.style.marginTop = '24px';
 
         let icon = document.createElement('i');
         icon.classList.add('material-icons');
@@ -77,8 +83,7 @@ window.onload = function () {
         deleteBtn.classList.add('waves-effect');
         deleteBtn.classList.add('waves-red');
         deleteBtn.classList.add('btn-flat');
-
-        inputContainer.appendChild(input);
+        
         buttons.appendChild(actionBtn);
         buttons.appendChild(cancelBtn);
         buttons.appendChild(deleteBtn);
@@ -103,21 +108,21 @@ window.onload = function () {
         });
 
         function beginEdit() {
-            input.removeAttribute('readonly');
+            input.disabled = false;
             actionText.textContent = ' Apply';
             cancelBtn.disabled = false;
         }
 
         function cancelEdit() {
             input.value = toDoText;
-            input.setAttribute('readonly', true);
+            input.disabled = true;
             actionText.textContent = ' Edit';
             cancelBtn.disabled = true;
         }
 
         function endEdit() {
             toDoText = input.value;
-            input.setAttribute('readonly', true);
+            input.disabled = true;
             actionText.textContent = ' Edit';
             cancelBtn.disabled = true;
         }
