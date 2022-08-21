@@ -1,5 +1,5 @@
 window.onload = function () {
-    function genToDo(text) {
+    function createToDo(text) {
         let date = new Date(),
             id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
                 date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
@@ -108,6 +108,6 @@ window.onload = function () {
     }
 
     document.getElementById('add-btn').addEventListener('click', function (e) {
-        document.querySelector('.container').appendChild(genToDo(''));
+        document.querySelector('.container').appendChild(createToDo(''));
     });
 }
