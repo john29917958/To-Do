@@ -15,6 +15,10 @@ window.onload = function () {
             cancelBtn = document.createElement('button'),
             deleteBtn = document.createElement('button');
 
+        /**
+         * Creates a to-do container.
+         * @returns {HTMLDivElement} A HTMLDivElement object as a to-do container.
+         */
         function createContainer() {
             let toDo = document.createElement('div');
     
