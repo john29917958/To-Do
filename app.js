@@ -1,3 +1,5 @@
+'use strict';
+
 window.onload = function () {
     function createToDo(text) {
         let date = new Date(),
@@ -5,7 +7,7 @@ window.onload = function () {
                 date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
                 date.getMilliseconds().toString(),
             toDoText = text,
-            toDo = document.createElement('div'),
+            toDo = createContainer(),
             inputContainer = document.createElement('div'),
             input = document.createElement('input'),
             buttons = document.createElement('div'),
@@ -13,10 +15,16 @@ window.onload = function () {
             cancelBtn = document.createElement('button'),
             deleteBtn = document.createElement('button');
 
-        toDo.classList.add('row');
-        toDo.classList.add('g-3');
-        toDo.classList.add('align-items-center');
-        toDo.classList.add('mb-2');
+        function createContainer() {
+            let toDo = document.createElement('div');
+    
+            toDo.classList.add('row');
+            toDo.classList.add('g-3');
+            toDo.classList.add('align-items-center');
+            toDo.classList.add('mb-2');
+    
+            return toDo;
+        }
 
         inputContainer.classList.add('col-auto');
         input.style.display = 'inline-block';
