@@ -118,6 +118,7 @@ window.onload = function () {
             input.disabled = true;
             actionText.textContent = ' Edit';
             cancelBtn.disabled = true;
+            M.toast({html: 'Change canceled'});
         }
 
         function endEdit() {
@@ -125,10 +126,12 @@ window.onload = function () {
             input.disabled = true;
             actionText.textContent = ' Edit';
             cancelBtn.disabled = true;
+            M.toast({html: 'Change applied'});
         }
 
         function deleteToDo() {
             toDo.parentNode.removeChild(toDo);
+            M.toast({html: 'To-do deleted'});
         }
 
         return toDo;
