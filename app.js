@@ -6,7 +6,7 @@ window.onload = function () {
                 date.getMilliseconds().toString(),
             toDoText = text,
             toDo = document.createElement('div'),
-            inputWrapper = document.createElement('div'),
+            inputContainer = document.createElement('div'),
             input = document.createElement('input'),
             buttons = document.createElement('div'),
             actionBtn = document.createElement('button'),
@@ -18,7 +18,7 @@ window.onload = function () {
         toDo.classList.add('align-items-center');
         toDo.classList.add('mb-2');
 
-        inputWrapper.classList.add('col-auto');
+        inputContainer.classList.add('col-auto');
         input.style.display = 'inline-block';
         input.classList.add('form-control');
         input.value = text;
@@ -56,12 +56,12 @@ window.onload = function () {
         deleteBtn.classList.add('btn');
         deleteBtn.classList.add('btn-light');
 
-        inputWrapper.appendChild(input);
+        inputContainer.appendChild(input);
         buttons.appendChild(actionBtn);
         buttons.appendChild(cancelBtn);
         buttons.appendChild(deleteBtn);
 
-        toDo.appendChild(inputWrapper);
+        toDo.appendChild(inputContainer);
         toDo.appendChild(buttons);
 
         actionBtn.addEventListener('click', function (e) {
