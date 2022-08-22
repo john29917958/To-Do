@@ -12,7 +12,7 @@ window.onload = function () {
             input = document.createElement('input'),
             inputLabel = document.createElement('label'),
             buttons = document.createElement('div'),
-            actionBtn = document.createElement('button'),
+            actionBtn = createActionBtn(),
             cancelBtn = document.createElement('button'),
             deleteBtn = document.createElement('button');
 
@@ -25,6 +25,37 @@ window.onload = function () {
             toDo.classList.add('row');
 
             return toDo;
+        }
+
+        /**
+         * Creates an edit / apply action button.
+         * @returns {HTMLButtonElement} A HTMLButtonElement object as an edit / apply action button.
+         */
+        function createActionBtn() {
+            let actionBtn = document.createElement('button');
+
+            let icon = document.createElement('i');
+            icon.classList.add('material-icons');
+            icon.classList.add('left');
+            icon.appendChild(document.createTextNode('create'));
+
+            actionBtn.append(icon);
+            let actionText = document.createTextNode(' Edit');
+            actionBtn.append(actionText);
+            actionBtn.style.marginRight = "5px";
+            actionBtn.classList.add('waves-effect');
+            actionBtn.classList.add('waves-light');
+            actionBtn.classList.add('btn');
+            actionBtn.classList.add('blue');
+            actionBtn.addEventListener('click', function (e) {
+                if (actionText.textContent === ' Edit') {
+                    beginEdit();
+                } else {
+                    endEdit();
+                }
+            });
+
+            return actionBtn;
         }
 
         inputContainer.classList.add('input-field');
@@ -51,19 +82,6 @@ window.onload = function () {
         let icon = document.createElement('i');
         icon.classList.add('material-icons');
         icon.classList.add('left');
-        icon.appendChild(document.createTextNode('create'));
-        actionBtn.append(icon);
-        let actionText = document.createTextNode(' Edit');
-        actionBtn.append(actionText);
-        actionBtn.style.marginRight = "5px";
-        actionBtn.classList.add('waves-effect');
-        actionBtn.classList.add('waves-light');
-        actionBtn.classList.add('btn');
-        actionBtn.classList.add('blue');
-
-        icon = document.createElement('i');
-        icon.classList.add('material-icons');
-        icon.classList.add('left');
         icon.appendChild(document.createTextNode('clear'));
         cancelBtn.append(icon);
         let cancelText = document.createTextNode(' Cancel');
@@ -83,21 +101,13 @@ window.onload = function () {
         deleteBtn.classList.add('waves-effect');
         deleteBtn.classList.add('waves-red');
         deleteBtn.classList.add('btn-flat');
-        
+
         buttons.appendChild(actionBtn);
         buttons.appendChild(cancelBtn);
         buttons.appendChild(deleteBtn);
 
         toDo.appendChild(inputContainer);
         toDo.appendChild(buttons);
-
-        actionBtn.addEventListener('click', function (e) {
-            if (actionText.textContent === ' Edit') {
-                beginEdit();
-            } else {
-                endEdit();
-            }
-        });
 
         cancelBtn.addEventListener('click', function (e) {
             cancelEdit();
@@ -107,31 +117,46 @@ window.onload = function () {
             deleteToDo();
         });
 
+        /**
+         * Changes button text.
+         * @param {HTMLButtonElement} button The button whose text to be changed.
+         * @param {String} text The new text for the button.
+         */
+        function changeBtnText(button, text) {
+            var textNode =  [...button.childNodes]
+                .filter(function (node) { return node.nodeType === 3; })[0];
+            
+            textNode.textContent = text;
+        }
+
         function beginEdit() {
             input.disabled = false;
-            actionText.textContent = ' Apply';
+            actionBtn.querySelector('i').textContent = 'check';
+            changeBtnText(actionBtn, ' Apply');
             cancelBtn.disabled = false;
         }
 
         function cancelEdit() {
             input.value = toDoText;
             input.disabled = true;
-            actionText.textContent = ' Edit';
+            actionBtn.querySelector('i').textContent = 'create';
+            changeBtnText(actionBtn, ' Edit');
             cancelBtn.disabled = true;
-            M.toast({html: 'Change canceled'});
+            M.toast({ html: 'Change canceled' });
         }
 
         function endEdit() {
             toDoText = input.value;
             input.disabled = true;
-            actionText.textContent = ' Edit';
+            actionBtn.querySelector('i').textContent = 'create';
+            changeBtnText(actionBtn, ' Edit');
             cancelBtn.disabled = true;
-            M.toast({html: 'Change applied'});
+            M.toast({ html: 'Change applied' });
         }
 
         function deleteToDo() {
             toDo.parentNode.removeChild(toDo);
-            M.toast({html: 'To-do deleted'});
+            M.toast({ html: 'To-do deleted' });
         }
 
         return toDo;
