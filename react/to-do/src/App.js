@@ -22,7 +22,7 @@ class App extends React.Component {
         <Navbar/>
         <br/>
         <div className='container'>
-          <button className='btn waves-effect waves-light' onClick={this.toggleState.bind(this)}>
+          <button className='btn waves-effect waves-light blue' onClick={this.toggleState.bind(this)}>
             {"Toggle the " + this.state.isToggled + " state!"}
           </button>
         </div>
