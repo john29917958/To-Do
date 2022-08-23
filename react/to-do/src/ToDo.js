@@ -1,19 +1,11 @@
 import React from "react";
 
 class ToDo extends React.Component {
-    #id;
-
     constructor(props) {
         super(props);
 
-        let date = new Date()
-        this.#id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
-            date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
-            date.getMilliseconds().toString();
-
         this.state = {
             text: this.props.text,
-            cachedText: null,
             isEditing: false
         };
     }
@@ -21,7 +13,6 @@ class ToDo extends React.Component {
     #beginEdit() {
         this.setState({
             isEditing: true,
-            cachedText: this.state.text
         });
     }
 
@@ -31,10 +22,18 @@ class ToDo extends React.Component {
         });
     }
 
-    #applyChange(text) {
+    #applyChange() {
+        this.setState({
+            isEditing: false
+        });
+
+        this.props.onTitleChange(this.props.id, this.state.text);
+    }
+    
+    #cancelChange() {
         this.setState({
             isEditing: false,
-            cachedText: null
+            text: this.props.text
         });
     }
 
@@ -44,8 +43,8 @@ class ToDo extends React.Component {
         return (
             <div className="row">
                 <div className="input-field col m5 s12">
-                    <input id={this.#id} type={"text"} value={this.state.text} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)}></input>
-                    <label htmlFor={this.#id}>Task Name</label>
+                    <input id={this.props.id} type={"text"} value={this.state.text} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)}></input>
+                    <label htmlFor={this.props.id}>Task Name</label>
                 </div>
                 <div className="col m7 s12" style={{ marginTop: "24px" }}>
                     <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
@@ -54,7 +53,7 @@ class ToDo extends React.Component {
                         </i>
                         {this.state.isEditing ? "Apply" : "Edit"}
                     </button>
-                    <button className="btn-flat waves-effect">
+                    <button className="btn-flat waves-effect" onClick={this.#cancelChange.bind(this)} disabled={!this.state.isEditing}>
                         <i className="material-icons left">
                             clear
                         </i>
@@ -70,6 +69,7 @@ class ToDo extends React.Component {
             </div>
         );
     }
+
 }
 
 export default ToDo;
