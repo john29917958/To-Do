@@ -67,6 +67,8 @@ class App extends React.Component {
               add
             </i>
           </button>
+          <br/>
+          <br/>
           <div>
             {
               this.state.toDos.map(function (toDo) {
