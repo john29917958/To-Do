@@ -37,6 +37,14 @@ class ToDo extends React.Component {
         });
     }
 
+    #handleKeyDown(e) {
+        if (e.keyCode === 13) { // Handle enter key event.            
+            this.#applyChange();
+        } else if (e.keyCode === 27) { // Handle ESC key event.
+            this.#cancelChange();
+        }
+    }
+
     render() {
         let self = this;
         let action = this.state.isEditing ? this.#applyChange.bind(this) : this.#beginEdit.bind(this);
@@ -44,8 +52,7 @@ class ToDo extends React.Component {
         return (
             <div className="row">
                 <div className="input-field col m5 s12">
-                    <input id={this.props.id} type={"text"} value={this.state.text} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)}></input>
-                    <label htmlFor={this.props.id}>Task Name</label>
+                    <input id={this.props.id} type={"text"} value={this.state.text} placeholder={"What to do..."} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)} onKeyDown={this.#handleKeyDown.bind(this)}></input>
                 </div>
                 <div className="col m7 s12" style={{ marginTop: "24px" }}>
                     <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
