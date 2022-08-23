@@ -41,6 +41,19 @@ class App extends React.Component {
     });
   }
 
+  #handleToDoDeletion(id) {
+    let toDos = this.state.toDos;
+    let toDo = toDos.filter(function (t, index) {
+      return t.id === id;
+    })[0];
+    let index = toDos.indexOf(toDo);
+    toDos.splice(index, 1);
+
+    this.setState({
+      toDos: toDos
+    });
+  }
+
   render() {
     let self = this;
 
@@ -57,7 +70,7 @@ class App extends React.Component {
           <div>
             {
               this.state.toDos.map(function (toDo) {
-                return <ToDo key={toDo.id} id={toDo.id} text={toDo.text} onTitleChange={self.#handleToDoChange.bind(self)} />
+                return <ToDo key={toDo.id} id={toDo.id} text={toDo.text} onTitleChange={self.#handleToDoChange.bind(self)} onDelete={self.#handleToDoDeletion.bind(self)} />
               })
             }
           </div>

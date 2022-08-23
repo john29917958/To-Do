@@ -38,6 +38,7 @@ class ToDo extends React.Component {
     }
 
     render() {
+        let self = this;
         let action = this.state.isEditing ? this.#applyChange.bind(this) : this.#beginEdit.bind(this);
 
         return (
@@ -59,7 +60,7 @@ class ToDo extends React.Component {
                         </i>
                         Cancel
                     </button>
-                    <button className="btn-flat waves-effect waves-red">
+                    <button className="btn-flat waves-effect waves-red" onClick={function () { self.props.onDelete(self.props.id); }}>
                         <i className="material-icons left">
                             delete
                         </i>
