@@ -1,18 +1,30 @@
 import './App.css';
 import React from 'react';
 import Navbar from './Navbar.js';
+import ToDo from './ToDo.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isToggled: true
+      toDos: []
     };
   }
 
-  toggleState() {
+  addToDo() {
+    let date = new Date(),
+      id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
+        date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
+        date.getMilliseconds().toString(),
+      toDos = this.state.toDos;
+
+    toDos.push({
+      id: id,
+      text: ''
+    });
+
     this.setState({
-      isToggled: !this.state.isToggled
+      toDos: toDos
     });
   }
 
@@ -22,10 +34,18 @@ class App extends React.Component {
         <Navbar />
         <br />
         <div className='container'>
-          <button className='btn waves-effect waves-light blue' onClick={this.toggleState.bind(this)}>
-            {"Toggle the " + this.state.isToggled + " state!"}
+          <button className='btn-floating btn-large waves-effect waves-light blue' onClick={this.addToDo.bind(this)}>
+            <i className='material-icons'>
+              add
+            </i>
           </button>
-          <p>Developing...</p>
+          <div>
+            {
+              this.state.toDos.map(function (toDo) {
+                return <ToDo key={toDo.id} id={toDo.id} text={toDo.text} />
+              })
+            }
+          </div>
         </div>
       </div>
     );
