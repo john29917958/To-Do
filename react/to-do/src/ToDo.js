@@ -5,8 +5,7 @@ class ToDo extends React.Component {
         super(props);
 
         this.state = {
-            text: this.props.text,
-            isDone: false
+            text: this.props.text
         };
     }
 
