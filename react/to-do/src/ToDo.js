@@ -29,7 +29,7 @@ class ToDo extends React.Component {
 
         this.props.onTitleChange(this.props.id, this.state.text);
     }
-    
+
     #cancelChange() {
         this.setState({
             isEditing: false,
@@ -50,35 +50,45 @@ class ToDo extends React.Component {
         let action = this.state.isEditing ? this.#applyChange.bind(this) : this.#beginEdit.bind(this);
 
         return (
-            <div className="row valign-wrapper">
-                <p className="col m1 s1">
-                    <label>
-                        <input type={"checkbox"} />
-                        <span></span>
-                    </label>
-                </p>
-                <div className="input-field col m4 s11">
-                    <input id={this.props.id} type={"text"} value={this.state.text} placeholder={"What to do..."} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)} onKeyDown={this.#handleKeyDown.bind(this)}></input>
+            <div className="row">
+                <div className="col l6 m5 s12">
+                    <div className="input-field inline">
+                        <p>
+                            <label>
+                                <input type={"checkbox"} />
+                                <span></span>
+                            </label>
+                        </p>
+                    </div>                
+                    <div className="input-field inline">
+                        <input id={this.props.id} type={"text"} value={this.state.text} placeholder={"What to do..."} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)} onKeyDown={this.#handleKeyDown.bind(this)}></input>
+                    </div>
                 </div>
-                <div className="col m7 s12">
-                    <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
-                        <i className="material-icons left">
-                            {this.state.isEditing ? "check" : "create"}
-                        </i>
-                        {this.state.isEditing ? "Apply" : "Edit"}
-                    </button>
-                    <button className="btn-flat waves-effect" onClick={this.#cancelChange.bind(this)} disabled={!this.state.isEditing}>
-                        <i className="material-icons left">
-                            clear
-                        </i>
-                        Cancel
-                    </button>
-                    <button className="btn-flat waves-effect waves-red" onClick={function () { self.props.onDelete(self.props.id); }}>
-                        <i className="material-icons left">
-                            delete
-                        </i>
-                        Delete
-                    </button>
+                <div className="col l6 m7 s12">
+                    <div className="input-field inline">
+                        <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
+                            <i className="material-icons left">
+                                {this.state.isEditing ? "check" : "create"}
+                            </i>
+                            {this.state.isEditing ? "Apply" : "Edit"}
+                        </button>
+                    </div>
+                    <div className="input-field inline">
+                        <button className="btn-flat waves-effect" onClick={this.#cancelChange.bind(this)} disabled={!this.state.isEditing}>
+                            <i className="material-icons left">
+                                clear
+                            </i>
+                            Cancel
+                        </button>
+                    </div>
+                    <div className="input-field inline">
+                        <button className="btn-flat waves-effect waves-red" onClick={function () { self.props.onDelete(self.props.id); }}>
+                            <i className="material-icons left">
+                                delete
+                            </i>
+                            Delete
+                        </button>
+                    </div>
                 </div>
             </div>
         );
