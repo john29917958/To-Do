@@ -53,39 +53,35 @@ class ToDo extends React.Component {
         let self = this;
 
         return (
-            <div className="row">
-                <div className="col s9">
-                    <div className="input-field inline">
-                        <p>
-                            <label>
-                                <input type={"checkbox"} checked={this.props.isDone} onChange={this.#done.bind(this)} />
-                                <span></span>
-                            </label>
-                        </p>
-                    </div>                
-                    <div className="input-field inline">
-                        <input
-                            id={this.props.id}
-                            type={"text"}
-                            value={this.state.text}
-                            placeholder={"What to do..."}
-                            disabled={this.props.isDone}
-                            readOnly={this.props.isDone}
-                            onChange={this.#onInputValChanged.bind(this)}
-                            onFocus={this.#beginEdit.bind(this)}
-                            onBlur={this.#applyChange.bind(this)}
-                            onKeyDown={this.#handleKeyDown.bind(this)} />
-                    </div>
+            <div className="row valign-wrapper">
+                <div className="col s1">
+                    <p>
+                        <label>
+                            <input type={"checkbox"} checked={this.props.isDone} onChange={this.#done.bind(this)} />
+                            <span></span>
+                        </label>
+                    </p>
+                </div>
+                <div className="col s10">
+                    <input
+                        id={this.props.id}
+                        type={"text"}
+                        value={this.state.text}
+                        placeholder={"What to do..."}
+                        disabled={this.props.isDone}
+                        readOnly={this.props.isDone}
+                        onChange={this.#onInputValChanged.bind(this)}
+                        onFocus={this.#beginEdit.bind(this)}
+                        onBlur={this.#applyChange.bind(this)}
+                        onKeyDown={this.#handleKeyDown.bind(this)} />
                 </div>
                 <div className="col s1">
-                    <div className="input-field inline">
-                        <button className="btn-flat waves-effect"
-                            onClick={function () { self.props.onDelete(self.props.id); }}>
-                            <i className="material-icons">
-                                delete
-                            </i>
-                        </button>
-                    </div>
+                    <button className="btn-flat waves-effect"
+                        onClick={function () { self.props.onDelete(self.props.id); }}>
+                        <i className="material-icons">
+                            delete
+                        </i>
+                    </button>
                 </div>
             </div>
         );
