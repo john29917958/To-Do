@@ -5,8 +5,7 @@ class ToDo extends React.Component {
         super(props);
 
         this.state = {
-            text: this.props.text,
-            isEditing: false
+            text: this.props.text
         };
     }
 
@@ -29,12 +28,16 @@ class ToDo extends React.Component {
 
         this.props.onTitleChange(this.props.id, this.state.text);
     }
-    
+
     #cancelChange() {
         this.setState({
             isEditing: false,
             text: this.props.text
         });
+    }
+
+    #done(e) {
+        this.props.onDoneChange(this.props.id, e.target.checked);
     }
 
     #handleKeyDown(e) {
@@ -47,31 +50,36 @@ class ToDo extends React.Component {
 
     render() {
         let self = this;
-        let action = this.state.isEditing ? this.#applyChange.bind(this) : this.#beginEdit.bind(this);
 
         return (
-            <div className="row">
-                <div className="input-field col m5 s12">
-                    <input id={this.props.id} type={"text"} value={this.state.text} placeholder={"What to do..."} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)} onKeyDown={this.#handleKeyDown.bind(this)}></input>
+            <div className="row valign-wrapper">
+                <div className="col s1">
+                    <p>
+                        <label>
+                            <input type={"checkbox"} checked={this.props.isDone} onChange={this.#done.bind(this)} />
+                            <span></span>
+                        </label>
+                    </p>
                 </div>
-                <div className="col m7 s12" style={{ marginTop: "24px" }}>
-                    <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
-                        <i className="material-icons left">
-                            {this.state.isEditing ? "check" : "create"}
-                        </i>
-                        {this.state.isEditing ? "Apply" : "Edit"}
-                    </button>
-                    <button className="btn-flat waves-effect" onClick={this.#cancelChange.bind(this)} disabled={!this.state.isEditing}>
-                        <i className="material-icons left">
-                            clear
-                        </i>
-                        Cancel
-                    </button>
-                    <button className="btn-flat waves-effect waves-red" onClick={function () { self.props.onDelete(self.props.id); }}>
-                        <i className="material-icons left">
+                <div className="col s10">
+                    <input
+                        id={this.props.id}
+                        type={"text"}
+                        value={this.state.text}
+                        placeholder={"What to do..."}
+                        disabled={this.props.isDone}
+                        readOnly={this.props.isDone}
+                        onChange={this.#onInputValChanged.bind(this)}
+                        onFocus={this.#beginEdit.bind(this)}
+                        onBlur={this.#applyChange.bind(this)}
+                        onKeyDown={this.#handleKeyDown.bind(this)} />
+                </div>
+                <div className="col s1">
+                    <button className="btn-flat waves-effect"
+                        onClick={function () { self.props.onDelete(self.props.id); }}>
+                        <i className="material-icons">
                             delete
                         </i>
-                        Delete
                     </button>
                 </div>
             </div>

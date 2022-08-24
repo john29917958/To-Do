@@ -45,7 +45,8 @@ class App extends React.Component {
 
     toDos.push({
       id: id,
-      text: ''
+      text: '',
+      isDone: false
     });
 
     this.setState({
@@ -60,6 +61,19 @@ class App extends React.Component {
     })[0];
 
     toDo.text = text;
+
+    this.setState({
+      toDos: toDos
+    });
+  }
+
+  #handleToDoDone(id, isDone) {
+    let toDos = this.state.toDos;
+    let toDo = toDos.filter(function (t) {
+      return t.id === id;
+    })[0];
+
+    toDo.isDone = isDone;
 
     this.setState({
       toDos: toDos
@@ -97,7 +111,14 @@ class App extends React.Component {
           <div>
             {
               this.state.toDos.map(function (toDo) {
-                return <ToDo key={toDo.id} id={toDo.id} text={toDo.text} onTitleChange={self.#handleToDoChange.bind(self)} onDelete={self.#handleToDoDeletion.bind(self)} />
+                return <ToDo
+                  key={toDo.id}
+                  id={toDo.id}
+                  text={toDo.text}
+                  isDone={toDo.isDone}
+                  onTitleChange={self.#handleToDoChange.bind(self)}
+                  onDoneChange={self.#handleToDoDone.bind(self)}
+                  onDelete={self.#handleToDoDeletion.bind(self)} />
               })
             }
           </div>
