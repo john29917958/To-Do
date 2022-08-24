@@ -50,11 +50,17 @@ class ToDo extends React.Component {
         let action = this.state.isEditing ? this.#applyChange.bind(this) : this.#beginEdit.bind(this);
 
         return (
-            <div className="row">
-                <div className="input-field col m5 s12">
+            <div className="row valign-wrapper">
+                <p className="col m1 s1">
+                    <label>
+                        <input type={"checkbox"} />
+                        <span></span>
+                    </label>
+                </p>
+                <div className="input-field col m4 s11">
                     <input id={this.props.id} type={"text"} value={this.state.text} placeholder={"What to do..."} disabled={!this.state.isEditing} readOnly={!this.state.isEditing} onChange={this.#onInputValChanged.bind(this)} onKeyDown={this.#handleKeyDown.bind(this)}></input>
                 </div>
-                <div className="col m7 s12" style={{ marginTop: "24px" }}>
+                <div className="col m7 s12">
                     <button className="btn waves-effect waves-light blue" style={{ marginRight: "5px" }} onClick={action}>
                         <i className="material-icons left">
                             {this.state.isEditing ? "check" : "create"}
