@@ -131,13 +131,13 @@ class App extends React.Component {
           }
           <div className='row'>
             <div className='col s12'>
-              <a href='#'
-                className={addBtnClass}
+              <a className={addBtnClass}
                 onClick={this.#addToDo.bind(this)}
                 onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                 onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                 onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                onMouseUp={this.#handleAddBtnMouseEvent.bind(this, 'default')}>
+                onMouseUp={this.#handleAddBtnMouseEvent.bind(this, 'default')}
+                style={{cursor: 'pointer'}}>
                 <i className='material-icons'>
                   add
                 </i>
