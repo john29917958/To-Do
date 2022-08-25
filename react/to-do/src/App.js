@@ -47,11 +47,8 @@ class App extends React.Component {
     toDos.push({
       id: id,
       text: '',
+      isEditing: true,
       isDone: false
-    });
-
-    this.setState({
-      toDos: toDos
     });
   }
 
@@ -63,6 +60,17 @@ class App extends React.Component {
 
     toDo.text = text;
 
+    this.setState({
+      toDos: toDos
+    });
+  }
+
+  #handleToDoEditing(id, isEditing) {
+    let toDos = this.state.toDos;
+    let toDo = toDos.filter(function (t) {
+      return t.id === id;
+    })[0];
+    toDo.isEditing = isEditing;
     this.setState({
       toDos: toDos
     });
@@ -123,8 +131,10 @@ class App extends React.Component {
                 key={toDo.id}
                 id={toDo.id}
                 text={toDo.text}
+                isEditing={toDo.isEditing}
                 isDone={toDo.isDone}
                 onTitleChange={self.#handleToDoChange.bind(self)}
+                onEditingChange={self.#handleToDoEditing.bind(self)}
                 onDoneChange={self.#handleToDoDone.bind(self)}
                 onDelete={self.#handleToDoDeletion.bind(self)} />
             })
@@ -132,11 +142,15 @@ class App extends React.Component {
           <div className='row'>
             <div className='col s12'>
               <a className={addBtnClass}
-                onClick={this.#addToDo.bind(this)}
+                //onClick={this.#addToDo.bind(this)}
                 onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                 onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                 onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                onMouseUp={this.#handleAddBtnMouseEvent.bind(this, 'default')}
+                onMouseUp={function () {
+                  console.log(self);
+                  self.#handleAddBtnMouseEvent.call(self, 'hovered')
+                  self.#addToDo.call(self);
+                }}
                 style={{cursor: 'pointer'}}>
                 <i className='material-icons'>
                   add

@@ -1,6 +1,8 @@
 import React from "react";
 
 class ToDo extends React.Component {
+    #input = null;
+
     constructor(props) {
         super(props);
 
@@ -9,10 +11,10 @@ class ToDo extends React.Component {
         };
     }
 
-    #beginEdit() {
-        this.setState({
-            isEditing: true,
-        });
+    componentDidMount() {
+        if (this.props.isEditing) {
+            this.#input.focus();
+        }
     }
 
     #onInputValChanged(e) {
@@ -21,17 +23,19 @@ class ToDo extends React.Component {
         });
     }
 
-    #applyChange() {
-        this.setState({
-            isEditing: false
-        });
+    #beginEdit() {
+        this.props.onEditingChange(this.props.id, true);
+    }
 
+    #applyChange() {
         this.props.onTitleChange(this.props.id, this.state.text);
+        this.props.onEditingChange(this.props.id, false);
     }
 
     #cancelChange() {
+        this.props.onEditingChange(this.props.id, false);
+
         this.setState({
-            isEditing: false,
             text: this.props.text
         });
     }
@@ -51,6 +55,14 @@ class ToDo extends React.Component {
     render() {
         let self = this;
 
+        if (this.#input !== null) {
+            if (this.props.isEditing) {
+                this.#input.focus();
+            } else {
+                this.#input.blur();
+            }
+        }
+
         return (
             <div className="row valign-wrapper">
                 <div className="col s1">
@@ -63,6 +75,13 @@ class ToDo extends React.Component {
                 </div>
                 <div className="col s10">
                     <input
+                        ref={
+                            function (input) {
+                                if (input != null) {
+                                    self.#input = input;
+                                }
+                            }
+                        }
                         id={this.props.id}
                         type={"text"}
                         value={this.state.text}
