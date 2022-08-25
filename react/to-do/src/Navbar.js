@@ -10,7 +10,7 @@ class Navbar extends React.Component {
             <nav>
                 <div className="nav-wrapper blue">
                     <div className='container'>
-                        <a href="#" className="brand-logo center">
+                        <a className="brand-logo center" style={{ cursor: 'pointer', userSelect: 'none' }}>
                             <i className="material-icons">
                                 format_list_bulleted
                             </i>
