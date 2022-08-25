@@ -61,7 +61,7 @@ class ToDo extends React.Component {
                         </label>
                     </p>
                 </div>
-                <div className="col s9">
+                <div className="col s10">
                     <input
                         id={this.props.id}
                         type={"text"}
@@ -74,7 +74,7 @@ class ToDo extends React.Component {
                         onBlur={this.#applyChange.bind(this)}
                         onKeyDown={this.#handleKeyDown.bind(this)} />
                 </div>
-                <div className="col s2">
+                <div className="col s1">
                     <button className="btn-flat waves-effect"
                         onClick={function () { self.props.onDelete(self.props.id); }}>
                         <i className="material-icons">
