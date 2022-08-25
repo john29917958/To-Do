@@ -9,7 +9,7 @@ class Navbar extends React.Component {
         return (
             <nav>
                 <div className="nav-wrapper blue">
-                    <a href="/" className="brand-logo">
+                    <a href="#" className="brand-logo">
                         <i className="material-icons right">
                             format_list_bulleted
                         </i>
