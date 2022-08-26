@@ -145,8 +145,7 @@ class App extends React.Component {
                 onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                 onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                 onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                onMouseUp={function () {
-                  console.log(self);
+                onMouseUp={function (e) {                  
                   self.#handleAddBtnMouseEvent.call(self, 'hovered')
                   self.#addToDo.call(self);
                 }}
