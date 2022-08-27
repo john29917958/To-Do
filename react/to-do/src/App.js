@@ -57,13 +57,17 @@ class App extends React.Component {
       isDone: false
     });
 
+    this.setState({
+      toDos: toDos
+    });
+
     localStorage.setItem('toDos', JSON.stringify(toDos));
 
     setTimeout(function () {
       document.querySelector('a.blue-text').scrollIntoView({
         behavior: 'smooth'
       });
-    }, 40);
+    }, 1000);
   }
 
   #handleToDoChange(id, text) {
@@ -144,11 +148,11 @@ class App extends React.Component {
       addBtnClass = 'blue-text';
     }
 
-    return (
+    return (      
       <div>
         <Navbar />
         <br />
-        <div className='container'>
+        <div className={'container ' + (this.state.toDos.length === 0 ? 'center-align' : '')}>
           {
             this.state.toDos.map(function (toDo) {
               return <ToDo
@@ -165,19 +169,31 @@ class App extends React.Component {
           }
           <div className='row'>
             <div className='col s12'>
-              <a className={addBtnClass}
-                onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
-                onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
-                onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                onMouseUp={function (e) {
-                  self.#handleAddBtnMouseEvent.call(self, 'hovered')
-                  self.#addToDo.call(self);
-                }}                
-                style={{ cursor: 'pointer', userSelect: 'none' }}>
-                <i className='material-icons left'>
-                  add
-                </i>
-              </a>
+              {                
+                this.state.toDos.length === 0 ?
+                  (<button
+                    type='button'
+                    className='btn blue waves-effect waves-light'
+                    onClick={self.#addToDo.bind(self)}>
+                    <i className='material-icons left'>
+                      add
+                    </i>
+                    Create your first to-do
+                  </button>) :
+                  (<a className={addBtnClass}
+                    onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
+                    onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
+                    onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
+                    onMouseUp={function (e) {
+                      self.#handleAddBtnMouseEvent.call(self, 'hovered')
+                      self.#addToDo.call(self);
+                    }}
+                    style={{ cursor: 'pointer', userSelect: 'none' }}>
+                    <i className='material-icons left'>
+                      add
+                    </i>
+                  </a>)
+              }
             </div>
           </div>
         </div>
