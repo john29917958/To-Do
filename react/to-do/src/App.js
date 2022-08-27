@@ -10,13 +10,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    let toDoJson = localStorage.getItem('toDos');
+    let toDos = [];
+    if (toDoJson) {
+      toDos = JSON.parse(toDoJson);
+    }
+
     this.state = {
-      toDos: []
+      toDos: toDos,
+      addBtnState: 'default'
     };
   }
 
   componentDidMount() {
-    let self = this;    
+    let self = this;
 
     window.addEventListener('keydown', function (e) {
       if (e.repeat) {
@@ -46,12 +53,21 @@ class App extends React.Component {
     toDos.push({
       id: id,
       text: '',
+      isEditing: true,
       isDone: false
     });
 
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
+
+    setTimeout(function () {
+      document.querySelector('a.blue-text').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }, 1000);
   }
 
   #handleToDoChange(id, text) {
@@ -65,6 +81,23 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
+  }
+
+  #handleToDoEditing(id, isEditing) {
+    let toDos = this.state.toDos;
+    let toDo = toDos.filter(function (t) {
+      return t.id === id;
+    })[0];
+
+    toDo.isEditing = isEditing;
+
+    this.setState({
+      toDos: toDos
+    });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoDone(id, isDone) {
@@ -78,6 +111,8 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoDeletion(id) {
@@ -91,36 +126,75 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
+  }
+
+  #handleAddBtnMouseEvent(btnState) {
+    this.setState({
+      addBtnState: btnState
+    });
   }
 
   render() {
-    let self = this;
+    let self = this,
+      addBtnClass;
 
-    return (
+    if (this.state.addBtnState === 'pressed') {
+      addBtnClass = 'blue-text text-darken-3';
+    } else if (this.state.addBtnState === 'hovered') {
+      addBtnClass = 'light-blue-text';
+    } else {
+      addBtnClass = 'blue-text';
+    }
+
+    return (      
       <div>
         <Navbar />
         <br />
-        <div className='container'>
-          <button className='btn-floating btn-large waves-effect waves-light blue' onClick={this.#addToDo.bind(this)}>
-            <i className='material-icons'>
-              add
-            </i>
-          </button>
-          <br />
-          <br />
-          <div>
-            {
-              this.state.toDos.map(function (toDo) {
-                return <ToDo
-                  key={toDo.id}
-                  id={toDo.id}
-                  text={toDo.text}
-                  isDone={toDo.isDone}
-                  onTitleChange={self.#handleToDoChange.bind(self)}
-                  onDoneChange={self.#handleToDoDone.bind(self)}
-                  onDelete={self.#handleToDoDeletion.bind(self)} />
-              })
-            }
+        <div className={'container ' + (this.state.toDos.length === 0 ? 'center-align' : '')}>
+          {
+            this.state.toDos.map(function (toDo) {
+              return <ToDo
+                key={toDo.id}
+                id={toDo.id}
+                text={toDo.text}
+                isEditing={toDo.isEditing}
+                isDone={toDo.isDone}
+                onTitleChange={self.#handleToDoChange.bind(self)}
+                onEditingChange={self.#handleToDoEditing.bind(self)}
+                onDoneChange={self.#handleToDoDone.bind(self)}
+                onDelete={self.#handleToDoDeletion.bind(self)} />
+            })
+          }
+          <div className='row'>
+            <div className='col s12'>
+              {                
+                this.state.toDos.length === 0 ?
+                  (<button
+                    type='button'
+                    className='btn blue waves-effect waves-light'
+                    onClick={self.#addToDo.bind(self)}>
+                    <i className='material-icons left'>
+                      add
+                    </i>
+                    Create your first to-do
+                  </button>) :
+                  (<a className={addBtnClass}
+                    onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
+                    onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
+                    onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
+                    onMouseUp={function (e) {
+                      self.#handleAddBtnMouseEvent.call(self, 'hovered')
+                      self.#addToDo.call(self);
+                    }}
+                    style={{ cursor: 'pointer', userSelect: 'none' }}>
+                    <i className='material-icons left'>
+                      add
+                    </i>
+                  </a>)
+              }
+            </div>
           </div>
         </div>
       </div>
