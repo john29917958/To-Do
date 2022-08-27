@@ -10,8 +10,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    let toDoJson = localStorage.getItem('toDos');
+    let toDos = [];
+    if (toDoJson) {
+      toDos = JSON.parse(toDoJson);
+    }
+
     this.state = {
-      toDos: [],
+      toDos: toDos,
       addBtnState: 'default'
     };
   }
@@ -50,6 +56,8 @@ class App extends React.Component {
       isEditing: true,
       isDone: false
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoChange(id, text) {
@@ -63,6 +71,8 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoEditing(id, isEditing) {
@@ -70,10 +80,14 @@ class App extends React.Component {
     let toDo = toDos.filter(function (t) {
       return t.id === id;
     })[0];
+
     toDo.isEditing = isEditing;
+
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoDone(id, isDone) {
@@ -87,6 +101,8 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
   #handleToDoDeletion(id) {
@@ -100,8 +116,10 @@ class App extends React.Component {
     this.setState({
       toDos: toDos
     });
+
+    localStorage.setItem('toDos', JSON.stringify(toDos));
   }
-  
+
   #handleAddBtnMouseEvent(btnState) {
     this.setState({
       addBtnState: btnState
@@ -110,8 +128,8 @@ class App extends React.Component {
 
   render() {
     let self = this,
-        addBtnClass;
-      
+      addBtnClass;
+
     if (this.state.addBtnState === 'pressed') {
       addBtnClass = 'blue-text text-darken-3';
     } else if (this.state.addBtnState === 'hovered') {
@@ -145,12 +163,12 @@ class App extends React.Component {
                 onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                 onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                 onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                onMouseUp={function (e) {                  
+                onMouseUp={function (e) {
                   self.#handleAddBtnMouseEvent.call(self, 'hovered')
                   self.#addToDo.call(self);
                 }}
-                style={{cursor: 'pointer'}}>
-                <i className='material-icons'>
+                style={{ cursor: 'pointer' }}>
+                <i className='material-icons left'>
                   add
                 </i>
               </a>
