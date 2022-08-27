@@ -72,7 +72,7 @@ class App extends React.Component {
           behavior: 'smooth'
         });
       }
-    }, 50);
+    }, 1000);
   }
 
   #handleToDoChange(id, text) {
@@ -185,13 +185,13 @@ class App extends React.Component {
                     </i>
                     Create your first to-do
                   </button>) :
-                  (<a id="add-btn"
+                  (<a
                     ref={function (button) {
                       if (button != null) {
                         self.#addBtn = button;
                       }
                     }}
-                    className={addBtnClass}
+                    className={ 'btn-flat ' + addBtnClass}
                     onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                     onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                     onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
@@ -200,7 +200,7 @@ class App extends React.Component {
                       self.#addToDo.call(self);
                     }}
                     style={{ cursor: 'pointer', userSelect: 'none' }}>
-                    <i className='material-icons left'>
+                    <i className='material-icons'>
                       add
                     </i>
                   </a>)
