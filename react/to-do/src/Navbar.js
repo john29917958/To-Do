@@ -11,7 +11,8 @@ class Navbar extends React.Component {
                 <div className="nav-wrapper blue">
                     <div className='container'>
                         <a className="brand-logo center"
-                            style={{ userSelect: 'none' }}>
+                            style={{ userSelect: 'none', cursor: "pointer" }}
+                            onClick={function () { window.location.reload(); }}>
                             <i className="material-icons">
                                 format_list_bulleted
                             </i>
