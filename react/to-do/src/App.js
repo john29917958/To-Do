@@ -58,6 +58,12 @@ class App extends React.Component {
     });
 
     localStorage.setItem('toDos', JSON.stringify(toDos));
+
+    setTimeout(function () {
+      document.querySelector('a.blue-text').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }, 40);
   }
 
   #handleToDoChange(id, text) {
@@ -166,8 +172,8 @@ class App extends React.Component {
                 onMouseUp={function (e) {
                   self.#handleAddBtnMouseEvent.call(self, 'hovered')
                   self.#addToDo.call(self);
-                }}
-                style={{ cursor: 'pointer' }}>
+                }}                
+                style={{ cursor: 'pointer', userSelect: 'none' }}>
                 <i className='material-icons left'>
                   add
                 </i>
