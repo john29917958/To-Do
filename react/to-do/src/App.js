@@ -7,6 +7,8 @@ import ToDo from './ToDo.js';
 let lastTimeStamp = 0;
 
 class App extends React.Component {
+  #addBtn = null;
+
   constructor(props) {
     super(props);
 
@@ -44,7 +46,8 @@ class App extends React.Component {
   }
 
   #addToDo() {
-    let date = new Date(),
+    let self = this,
+      date = new Date(),
       id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
         date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
         date.getMilliseconds().toString(),
@@ -64,10 +67,12 @@ class App extends React.Component {
     localStorage.setItem('toDos', JSON.stringify(toDos));
 
     setTimeout(function () {
-      document.querySelector('a.blue-text').scrollIntoView({
-        behavior: 'smooth'
-      });
-    }, 1000);
+      if (self.#addBtn.offsetTop + self.#addBtn.offsetHeight > window.pageYOffset + window.innerHeight) {
+        self.#addBtn.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    }, 50);
   }
 
   #handleToDoChange(id, text) {
@@ -180,7 +185,13 @@ class App extends React.Component {
                     </i>
                     Create your first to-do
                   </button>) :
-                  (<a className={addBtnClass}
+                  (<a id="add-btn"
+                    ref={function (button) {
+                      if (button != null) {
+                        self.#addBtn = button;
+                      }
+                    }}
+                    className={addBtnClass}
                     onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
                     onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
                     onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
