@@ -11,12 +11,6 @@ class ToDo extends React.Component {
         };
     }
 
-    componentDidMount() {
-        if (this.props.isEditing) {
-            this.#input.focus();
-        }
-    }
-
     #onInputValChanged(e) {
         this.setState({
             text: e.target.value
