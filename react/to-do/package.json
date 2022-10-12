@@ -2,6 +2,7 @@
   "name": "to-do",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://john29917958.github.io/To-Do/react/app/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
