@@ -7,8 +7,6 @@ import ToDo from './ToDo.js';
 let lastTimeStamp = 0;
 
 class App extends React.Component {
-  #addBtn = null;
-
   constructor(props) {
     super(props);
 
@@ -19,8 +17,7 @@ class App extends React.Component {
     }
 
     this.state = {
-      toDos: toDos,
-      addBtnState: 'default'
+      toDos: toDos
     };
   }
 
@@ -45,18 +42,17 @@ class App extends React.Component {
     }, true);
   }
 
-  #addToDo() {
-    let self = this,
-      date = new Date(),
+  #addToDo(title) {
+    let date = new Date(),
       id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
         date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
         date.getMilliseconds().toString(),
       toDos = this.state.toDos;
 
-    toDos.push({
+    toDos.unshift({
       id: id,
-      text: '',
-      isEditing: true,
+      text: title,
+      isEditing: false,
       isDone: false
     });
 
@@ -65,14 +61,6 @@ class App extends React.Component {
     });
 
     localStorage.setItem('toDos', JSON.stringify(toDos));
-
-    setTimeout(function () {
-      if (self.#addBtn.offsetTop + self.#addBtn.offsetHeight > window.pageYOffset + window.innerHeight) {
-        self.#addBtn.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    }, 1000);
   }
 
   #handleToDoChange(id, text) {
@@ -135,27 +123,39 @@ class App extends React.Component {
     localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
-  #handleAddBtnMouseEvent(btnState) {
+  #onToDoInputValChanged(e) {
     this.setState({
-      addBtnState: btnState
+      toDoInputVal: e.target.value
     });
   }
 
   render() {
-    let self = this,
-      addBtnClass;
+    let self = this;
 
-    if (this.state.addBtnState === 'pressed') {
-      addBtnClass = 'blue-text text-darken-3';
-    } else if (this.state.addBtnState === 'hovered') {
-      addBtnClass = 'light-blue-text';
-    } else {
-      addBtnClass = 'blue-text';
-    }
-
-    return (      
+    return (
       <div>
         <Navbar />
+        <div className='navbar-fixed'>
+          <nav className='white'>
+            <div className='nav-wrapper'>
+              <form>
+                <div className='input-field'>
+                  <input id='create-input' type="search" placeholder='Create your task...' onChange={this.#onToDoInputValChanged.bind(this)} />
+                  <label className='label-icon' for='create-input'>
+                    <i className='material-icons'>
+                      format_list_bulleted
+                    </i>
+                  </label>
+                  <button className='btn waves-effect waves-light blue white-text' style={{
+                    position: 'absolute',
+                    top: '14px',
+                    right: '10px'
+                  }} onClick={this.#addToDo.bind(this, this.state.toDoInputVal)}>ADD</button>
+                </div>
+              </form>
+            </div>
+          </nav>
+        </div>
         <br />
         <div className={'container ' + (this.state.toDos.length === 0 ? 'center-align' : '')}>
           {
@@ -174,36 +174,11 @@ class App extends React.Component {
           }
           <div className='row'>
             <div className='col s12'>
-              {                
+              {
                 this.state.toDos.length === 0 ?
-                  (<button
-                    type='button'
-                    className='btn blue waves-effect waves-light'
-                    onClick={self.#addToDo.bind(self)}>
-                    <i className='material-icons left'>
-                      add
-                    </i>
+                  (<h4 className='blue-text'>
                     Create your first to-do
-                  </button>) :
-                  (<a
-                    ref={function (button) {
-                      if (button != null) {
-                        self.#addBtn = button;
-                      }
-                    }}
-                    className={ 'btn-flat ' + addBtnClass}
-                    onMouseOver={this.#handleAddBtnMouseEvent.bind(this, 'hovered')}
-                    onMouseDown={this.#handleAddBtnMouseEvent.bind(this, 'pressed')}
-                    onMouseLeave={this.#handleAddBtnMouseEvent.bind(this, 'default')}
-                    onMouseUp={function (e) {
-                      self.#handleAddBtnMouseEvent.call(self, 'hovered')
-                      self.#addToDo.call(self);
-                    }}
-                    style={{ cursor: 'pointer', userSelect: 'none' }}>
-                    <i className='material-icons'>
-                      add
-                    </i>
-                  </a>)
+                  </h4>) : ''
               }
             </div>
           </div>
