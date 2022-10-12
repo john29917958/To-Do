@@ -57,7 +57,8 @@ class App extends React.Component {
     });
 
     this.setState({
-      toDos: toDos
+      toDos: toDos,
+      toDoInputVal: ''
     });
 
     localStorage.setItem('toDos', JSON.stringify(toDos));
@@ -140,7 +141,12 @@ class App extends React.Component {
             <div className='nav-wrapper'>
               <form>
                 <div className='input-field'>
-                  <input id='create-input' type="search" placeholder='Create your task...' onChange={this.#onToDoInputValChanged.bind(this)} />
+                  <input
+                    id='create-input'
+                    type='search'
+                    value={this.state.toDoInputVal}
+                    placeholder='Create your task...'
+                    onChange={this.#onToDoInputValChanged.bind(this)} />
                   <label className='label-icon' for='create-input'>
                     <i className='material-icons'>
                       format_list_bulleted
