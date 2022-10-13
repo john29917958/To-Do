@@ -3,9 +3,6 @@ import React from 'react';
 import Navbar from './Navbar.js';
 import ToDo from './ToDo.js';
 
-//TODO: Solve issue of key combination triggered twice resulted by componentDidMount triggered twice.
-let lastTimeStamp = 0;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,27 +16,6 @@ class App extends React.Component {
     this.state = {
       toDos: toDos
     };
-  }
-
-  componentDidMount() {
-    let self = this;
-
-    window.addEventListener('keydown', function (e) {
-      if (e.repeat) {
-        return;
-      }
-
-      if (e.ctrlKey && e.code === 'KeyL') {
-        if (e.timeStamp === lastTimeStamp) {
-          return;
-        }
-
-        lastTimeStamp = e.timeStamp;
-
-        e.preventDefault();
-        self.#addToDo();
-      }
-    }, true);
   }
 
   #addToDo(title) {
