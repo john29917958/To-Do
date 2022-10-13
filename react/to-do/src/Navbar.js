@@ -15,7 +15,7 @@ class Navbar extends React.Component {
                                 style={{ userSelect: 'none', cursor: "pointer" }}
                                 onClick={function () { window.location.reload(); }}>
                                 <i className="material-icons">
-                                    format_list_bulleted
+                                    done_all
                                 </i>
                             </a>
                             <ul className="right hide-on-med-and-down"></ul>
