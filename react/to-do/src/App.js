@@ -185,11 +185,18 @@ class App extends React.Component {
             <div className='col s12'>
               {
                 this.state.toDos.length === 0 ?
-                  (<h4 className='blue-text'>
-                    <i className='material-icons large'>done</i>
-                    <br />
-                    Wishing you a great day
-                  </h4>) : ''
+                  (<div>
+                    <h4 className='blue-text hide-on-small-only'>
+                      <i className='material-icons large'>done</i>
+                      <br />
+                      Wishing you a great day
+                    </h4>
+                    <h6 className='blue-text hide-on-med-and-up'>
+                      <i className='material-icons medium'>done</i>
+                      <br />
+                      Wishing you a great day
+                    </h6>
+                  </div>) : ''
               }
             </div>
           </div>
