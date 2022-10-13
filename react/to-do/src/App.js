@@ -146,7 +146,7 @@ class App extends React.Component {
                     onChange={this.#onToDoInputValChanged.bind(this)} />
                   <label className='label-icon' for='create-input'>
                     <i className='material-icons'>
-                      format_list_bulleted
+                      edit
                     </i>
                   </label>
                   <button
@@ -187,12 +187,12 @@ class App extends React.Component {
                 this.state.toDos.length === 0 ?
                   (<div>
                     <h4 className='blue-text hide-on-small-only'>
-                      <i className='material-icons large'>done</i>
+                      <i className='material-icons large'>done_all</i>
                       <br />
                       Wishing you a great day
                     </h4>
                     <h6 className='blue-text hide-on-med-and-up'>
-                      <i className='material-icons medium'>done</i>
+                      <i className='material-icons medium'>done_all</i>
                       <br />
                       Wishing you a great day
                     </h6>
