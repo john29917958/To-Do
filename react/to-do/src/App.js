@@ -142,6 +142,7 @@ class App extends React.Component {
                     type='search'
                     value={this.state.toDoInputVal}
                     placeholder='Task name'
+                    autocomplete='off'
                     onChange={this.#onToDoInputValChanged.bind(this)} />
                   <label className='label-icon' for='create-input'>
                     <i className='material-icons'>
