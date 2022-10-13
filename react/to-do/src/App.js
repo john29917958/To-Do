@@ -3,9 +3,6 @@ import React from 'react';
 import Navbar from './Navbar.js';
 import ToDo from './ToDo.js';
 
-//TODO: Solve issue of key combination triggered twice resulted by componentDidMount triggered twice.
-let lastTimeStamp = 0;
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -21,28 +18,18 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let self = this;
-
-    window.addEventListener('keydown', function (e) {
-      if (e.repeat) {
-        return;
-      }
-
-      if (e.ctrlKey && e.code === 'KeyL') {
-        if (e.timeStamp === lastTimeStamp) {
-          return;
-        }
-
-        lastTimeStamp = e.timeStamp;
-
-        e.preventDefault();
-        self.#addToDo();
-      }
-    }, true);
-  }
-
   #addToDo(title) {
+    if (title == null || title.length === 0) {
+      console.log('title is empty');
+      window.M.toast({
+        'html': `<p>
+        <i class="material-icons left">info_outline</i>
+        <span class="right">Please input the task name</span>        
+        </p>` });
+      return;
+    }
+
+    title = title.trim();
     let date = new Date(),
       id = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString() +
         date.getHours().toString() + date.getMinutes().toString() + date.getSeconds().toString() +
@@ -139,24 +126,40 @@ class App extends React.Component {
         <div className='navbar-fixed'>
           <nav className='white'>
             <div className='nav-wrapper'>
-              <form>
+              <form onKeyDown={function (e) {
+                console.log(e);
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+
+                  if (!e.repeat) {
+                    self.#addToDo(self.state.toDoInputVal);
+                  }
+                }
+              }}>
                 <div className='input-field'>
                   <input
                     id='create-input'
                     type='search'
                     value={this.state.toDoInputVal}
-                    placeholder='Create your task...'
+                    placeholder='Task name'
+                    autocomplete='off'
                     onChange={this.#onToDoInputValChanged.bind(this)} />
                   <label className='label-icon' for='create-input'>
                     <i className='material-icons'>
                       format_list_bulleted
                     </i>
                   </label>
-                  <button className='btn waves-effect waves-light blue white-text' style={{
-                    position: 'absolute',
-                    top: '14px',
-                    right: '10px'
-                  }} onClick={this.#addToDo.bind(this, this.state.toDoInputVal)}>ADD</button>
+                  <button
+                    className='btn waves-effect waves-light blue white-text'
+                    disabled={this.state.toDoInputVal == null || this.state.toDoInputVal.trim().length === 0}
+                    style={{
+                      position: 'absolute',
+                      top: '14px',
+                      right: '10px'
+                    }}
+                    onClick={this.#addToDo.bind(this, this.state.toDoInputVal)}
+                    type='button'
+                  >Add</button>
                 </div>
               </form>
             </div>
@@ -183,7 +186,9 @@ class App extends React.Component {
               {
                 this.state.toDos.length === 0 ?
                   (<h4 className='blue-text'>
-                    Create your first to-do
+                    <i className='material-icons large'>done</i>
+                    <br />
+                    Wishing you a great day
                   </h4>) : ''
               }
             </div>
