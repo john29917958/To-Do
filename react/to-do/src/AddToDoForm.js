@@ -21,7 +21,7 @@ class AddToDoForm extends React.Component {
   componentDidMount() {
     this.#addToDoModal = window.M.Modal.init(this.addToDoModal.current, {
       onOpenEnd: function () {
-        this.addToDoModalInput.current.focus();
+        
       }.bind(this),
       onCloseEnd: function () {
         this.#clearTaskName();
@@ -67,6 +67,7 @@ class AddToDoForm extends React.Component {
 
   #openAddToDoModal() {
     this.#addToDoModal.open();
+    this.addToDoModalInput.current.focus();
   }
 
   render() {
@@ -92,13 +93,14 @@ class AddToDoForm extends React.Component {
             </div>
           </div>
           <div className='modal-footer'>
-            <a href='#!' className='waves-effect waves-blue btn blue' disabled={this.#isTaskNameEmpty}
+            <button href='#!' className='waves-effect waves-light btn blue' disabled={this.#isTaskNameEmpty}
               onClick={this.#handleAddToDoOnSmallDevices.bind(this)}>
               Add
-            </a>
-            <a href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearTaskName.bind(this)}>
+            </button>
+            {"\u00a0"}
+            <button href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearTaskName.bind(this)}>
               Cancel
-            </a>
+            </button>
           </div>
         </div>
         <div className='navbar-fixed hide-on-small-only'>
