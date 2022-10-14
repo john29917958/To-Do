@@ -21,7 +21,7 @@ class AddToDoForm extends React.Component {
   componentDidMount() {
     this.#addToDoModal = window.M.Modal.init(this.addToDoModal.current, {
       onOpenEnd: function () {
-        
+        this.addToDoModalInput.current.focus();
       }.bind(this),
       onCloseEnd: function () {
         this.#clearTaskName();
@@ -67,7 +67,6 @@ class AddToDoForm extends React.Component {
 
   #openAddToDoModal() {
     this.#addToDoModal.open();
-    this.addToDoModalInput.current.focus();
   }
 
   render() {
