@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import Navbar from './Navbar.js';
+import AddToDoForm from './AddToDoForm.js'
 import ToDo from './ToDo.js';
 
 class App extends React.Component {
@@ -14,13 +15,13 @@ class App extends React.Component {
     }
 
     this.state = {
-      toDos: toDos
+      toDos: toDos,
+      toDoInputVal: ''
     };
   }
 
   #addToDo(title) {
     if (title == null || title.length === 0) {
-      console.log('title is empty');
       window.M.toast({
         'html': `<p>
         <i class="material-icons left">info_outline</i>
@@ -111,60 +112,13 @@ class App extends React.Component {
     localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
-  #onToDoInputValChanged(e) {
-    this.setState({
-      toDoInputVal: e.target.value
-    });
-  }
-
   render() {
     let self = this;
 
     return (
-      <div>
+      <div>        
         <Navbar />
-        <div className='navbar-fixed'>
-          <nav className='white'>
-            <div className='nav-wrapper'>
-              <form onKeyDown={function (e) {
-                console.log(e);
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-
-                  if (!e.repeat) {
-                    self.#addToDo(self.state.toDoInputVal);
-                  }
-                }
-              }}>
-                <div className='input-field'>
-                  <input
-                    id='create-input'
-                    type='search'
-                    value={this.state.toDoInputVal}
-                    placeholder='Task name'
-                    autocomplete='off'
-                    onChange={this.#onToDoInputValChanged.bind(this)} />
-                  <label className='label-icon' for='create-input'>
-                    <i className='material-icons'>
-                      edit
-                    </i>
-                  </label>
-                  <button
-                    className='btn waves-effect waves-light blue white-text'
-                    disabled={this.state.toDoInputVal == null || this.state.toDoInputVal.trim().length === 0}
-                    style={{
-                      position: 'absolute',
-                      top: '14px',
-                      right: '10px'
-                    }}
-                    onClick={this.#addToDo.bind(this, this.state.toDoInputVal)}
-                    type='button'
-                  >Add</button>
-                </div>
-              </form>
-            </div>
-          </nav>
-        </div>
+        <AddToDoForm addToDo={this.#addToDo.bind(this)} />
         <br />
         <div className={'container ' + (this.state.toDos.length === 0 ? 'center-align' : '')}>
           {
