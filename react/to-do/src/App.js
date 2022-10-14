@@ -112,18 +112,6 @@ class App extends React.Component {
     localStorage.setItem('toDos', JSON.stringify(toDos));
   }
 
-  #onToDoInputValChanged(e) {
-    this.setState({
-      toDoInputVal: e.target.value
-    });
-  }
-
-  #clearAddToDoInputText() {
-    this.setState({
-      toDoInputVal: ''
-    });
-  }
-
   render() {
     let self = this;
 
