@@ -29,7 +29,7 @@ class AddToDoForm extends React.Component {
     });
   }
 
-  #onAddToDo(e) {
+  #handleAddToDo(e) {
     if (e.type === 'keydown' && e.key) {
       if (e.key !== 'Enter' || e.repeat) {
         return;
@@ -44,8 +44,8 @@ class AddToDoForm extends React.Component {
     }
   }
 
-  #onAddToDoOnSmallDevices(e) {
-    this.#onAddToDo(e);
+  #handleAddToDoOnSmallDevices(e) {
+    this.#handleAddToDo(e);
     if (!this.#isTaskNameEmpty) { // Task name is valid. To-do is added.
       this.#addToDoModal.close();
     } else {  // Task name is invalid. To-do is not added.
@@ -92,7 +92,7 @@ class AddToDoForm extends React.Component {
             </div>
           </div>
           <div className='modal-footer'>
-            <a href='#!' className='waves-effect waves-blue btn blue' onClick={this.#onAddToDoOnSmallDevices.bind(this)}>
+            <a href='#!' className='waves-effect waves-blue btn blue' onClick={this.#handleAddToDoOnSmallDevices.bind(this)}>
               Add
             </a>
             <a href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearTaskName.bind(this)}>
@@ -103,7 +103,7 @@ class AddToDoForm extends React.Component {
         <div className='navbar-fixed hide-on-small-only'>
           <nav className='white'>
             <div className='nav-wrapper'>
-              <form onKeyDown={this.#onAddToDo.bind(this)}>
+              <form onKeyDown={this.#handleAddToDo.bind(this)}>
                 <div className='input-field'>
                   <input
                     id='create-input'
@@ -125,7 +125,7 @@ class AddToDoForm extends React.Component {
                       top: '14px',
                       right: '10px'
                     }}
-                    onClick={this.#onAddToDo.bind(this)}
+                    onClick={this.#handleAddToDo.bind(this)}
                     type='button'
                   >Add</button>
                 </div>
