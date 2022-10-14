@@ -92,7 +92,8 @@ class AddToDoForm extends React.Component {
             </div>
           </div>
           <div className='modal-footer'>
-            <a href='#!' className='waves-effect waves-blue btn blue' onClick={this.#handleAddToDoOnSmallDevices.bind(this)}>
+            <a href='#!' className='waves-effect waves-blue btn blue' disabled={this.#isTaskNameEmpty}
+              onClick={this.#handleAddToDoOnSmallDevices.bind(this)}>
               Add
             </a>
             <a href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearTaskName.bind(this)}>
