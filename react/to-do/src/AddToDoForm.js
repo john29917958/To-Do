@@ -15,20 +15,14 @@ class AddToDoForm extends React.Component {
     }
 
     this.addToDoModal = React.createRef();
-    //this.addToDoModalInput = React.createRef();
+    this.addToDoModalInput = React.createRef();
   }
 
   componentDidMount() {
     this.#addToDoModal = window.M.Modal.init(this.addToDoModal.current, {
-      onOpenStart: function () {
-        console.log('onOpenStart');
-      },
       onOpenEnd: function () {
-        //this.addToDoModalInput.current.focus();
-      },
-      onCloseStart: function () {
-        console.log('onCloseStart');
-      },
+        this.addToDoModalInput.current.focus();
+      }.bind(this),
       onCloseEnd: function () {
         this.#clearTaskName();
       }.bind(this)
@@ -45,10 +39,18 @@ class AddToDoForm extends React.Component {
     }
 
     this.props.addToDo(this.state.taskName.trim());
-    if (!this.#isTaskNameEmpty) {
+    if (!this.#isTaskNameEmpty) { // Task name is valid. To-do is added.
       this.#clearTaskName();
+    }
+  }
+
+  #onAddToDoOnSmallDevices(e) {
+    this.#onAddToDo(e);
+    if (!this.#isTaskNameEmpty) { // Task name is valid. To-do is added.
       this.#addToDoModal.close();
-    }    
+    } else {  // Task name is invalid. To-do is not added.
+      this.addToDoModalInput.current.focus();
+    }
   }
 
   #onTaskNameChanged(e) {
@@ -82,13 +84,15 @@ class AddToDoForm extends React.Component {
             <div className='row'>
               <form className='col s12'>
                 <div className='input-field col s12'>
-                  <input placeholder='Task name' type='text' value={this.state.taskName} autoComplete='off' onChange={this.#onTaskNameChanged.bind(this)} />
+                  <input placeholder='Task name' type='text' value={this.state.taskName}
+                    autoComplete='off' onChange={this.#onTaskNameChanged.bind(this)}
+                    ref={this.addToDoModalInput} />
                 </div>
               </form>
             </div>
           </div>
           <div className='modal-footer'>
-            <a href='#!' className='waves-effect waves-blue btn blue' onClick={this.#onAddToDo.bind(this)}>
+            <a href='#!' className='waves-effect waves-blue btn blue' onClick={this.#onAddToDoOnSmallDevices.bind(this)}>
               Add
             </a>
             <a href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearTaskName.bind(this)}>
