@@ -20,10 +20,6 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.M.AutoInit();
-  }
-
   #addToDo(title) {
     if (title == null || title.length === 0) {
       window.M.toast({
@@ -132,34 +128,7 @@ class App extends React.Component {
     let self = this;
 
     return (
-      <div>
-        <div className='fixed-action-btn hide-on-med-and-up'>
-          <a className='btn-floating btn-large waves-effect waves-light blue modal-trigger' href='#add-to-do-modal'>
-            <i className='large material-icons'>
-              add
-            </i>
-          </a>
-        </div>
-        <div className='modal bottom-sheet' id="add-to-do-modal">
-          <div className='modal-content'>
-            <div className='row'>
-              <form className='col s12'>
-                <div className='input-field col s12'>
-                  <input placeholder='Task name' type='text' value={this.state.toDoInputVal} autocomplete='off' onChange={this.#onToDoInputValChanged
-                  .bind(this)} />
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className='modal-footer'>
-            <a href='#!' className='modal-close waves-effect waves-blue btn blue' onClick={this.#addToDo.bind(this, this.state.toDoInputVal)}>
-              Add
-            </a>
-            <a href='#!' className='modal-close waves-effect btn-flat' onClick={this.#clearAddToDoInputText.bind(this)}>
-              Cancel
-            </a>
-          </div>
-        </div>
+      <div>        
         <Navbar />
         <AddToDoForm addToDo={this.#addToDo.bind(this)} />
         <br />
