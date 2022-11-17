@@ -140,12 +140,12 @@ class App extends React.Component {
               {
                 this.state.toDos.length === 0 ?
                   (<div>
-                    <h4 className='blue-text hide-on-small-only'>
+                    <h4 className='red-text hide-on-small-only'>
                       <i className='material-icons large'>done_all</i>
                       <br />
                       Wishing you a great day
                     </h4>
-                    <h6 className='blue-text hide-on-med-and-up'>
+                    <h6 className='red-text hide-on-med-and-up'>
                       <i className='material-icons medium'>done_all</i>
                       <br />
                       Wishing you a great day

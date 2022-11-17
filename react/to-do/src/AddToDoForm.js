@@ -74,7 +74,7 @@ class AddToDoForm extends React.Component {
     return (
       <div>
         <div className='fixed-action-btn hide-on-med-and-up'>
-          <button className='btn-floating btn-large waves-effect waves-light blue' onClick={this.#openAddToDoModal.bind(this)}>
+          <button className='btn-floating btn-large waves-effect waves-light red' onClick={this.#openAddToDoModal.bind(this)}>
             <i className='large material-icons'>
               add
             </i>
@@ -93,7 +93,7 @@ class AddToDoForm extends React.Component {
             </div>
           </div>
           <div className='modal-footer'>
-            <button href='#!' className='waves-effect waves-light btn blue' disabled={this.#isTaskNameEmpty}
+            <button href='#!' className='waves-effect waves-light btn red' disabled={this.#isTaskNameEmpty}
               onClick={this.#handleAddToDoOnSmallDevices.bind(this)}>
               Add
             </button>
@@ -121,7 +121,7 @@ class AddToDoForm extends React.Component {
                     </i>
                   </label>
                   <button
-                    className='btn waves-effect waves-light blue white-text'
+                    className='btn waves-effect waves-light red white-text'
                     disabled={this.#isTaskNameEmpty}
                     style={{
                       position: 'absolute',

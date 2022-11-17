@@ -9,7 +9,7 @@ class Navbar extends React.Component {
         return (
             <div className='navbar-fixed'>
                 <nav>
-                    <div className="nav-wrapper blue">
+                    <div className="nav-wrapper red">
                         <div className='container'>
                             <a className="brand-logo center"
                                 style={{ userSelect: 'none', cursor: "pointer" }}
